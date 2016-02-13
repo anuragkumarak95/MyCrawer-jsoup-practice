@@ -3,20 +3,30 @@ package org.practice.jsoup;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class FlipkartSearchProductClrawler {
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args){
 		System.out.println("Enter the product for crawler on flipkart :");
 
 		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);
 		String product = sc.nextLine();
-		Document doc = Jsoup.connect(
+
+		execute(product);
+		// code to recursively re-execute the Application.
+		System.out.println("Wanna Try Again : ");
+		if (sc.nextLine().equals("y")) {
+			main(null);
+		}
+	}
+	
+	private static void execute(String product) {
+		try{
+			Document doc = Jsoup.connect(
 				"http://www.flipkart.com/search?q=" + product
 						+ "&as=off&as-show=off&otracker=start").get();
 		Elements elements = doc.select("div");
@@ -49,7 +59,7 @@ public class FlipkartSearchProductClrawler {
 									.select("span");
 							for (Element rate : productRate) {
 								// looking for rate in span value.
-								if (rate.attr("class").contains("fk-font-17")) {
+								if (rate.attr("class").contains("fk-font")) {
 
 									pro.setRate(rate.childNodes().get(0));
 								}
@@ -65,13 +75,16 @@ public class FlipkartSearchProductClrawler {
 		for (Product productTrav : productList) {
 			productTrav.printProductDetais();
 		}
-
-		// code to recursively re-execute the Application.
-		System.out.println("Wanna Try Again : ");
-		if (sc.nextLine().equals("y")) {
-			main(null);
+		System.out.println("Entry count : "+productList.size());
 		}
-
+		catch(IOException e) {
+			e.printStackTrace();
+			//re-execute in case of error occurence.
+			execute(product);
+		}
 	}
+			
+		
+	
 
 }
