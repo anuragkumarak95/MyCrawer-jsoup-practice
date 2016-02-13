@@ -31,11 +31,11 @@ public class App
     	for(Element e : elements) {
     			if(e.hasAttr("class")) {
     				//crawling products list
-    				if(e.attr("class").contains("product-unit unit-4 browse-product new-design ")) {
+    				if(e.attr("class").contains("product-unit")) {
     						Elements products = e.select("div");
     						for(Element productDetails : products) {
     							
-    							if(productDetails.attr("class").contains("pu-details lastUnit")) {
+    							if(productDetails.attr("class").contains("pu-details")) {
     								Product pro = new Product();
     								Elements productTitle = productDetails.select("a");
     								for(Element title : productTitle) {
