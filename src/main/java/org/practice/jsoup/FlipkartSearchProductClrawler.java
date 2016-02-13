@@ -8,6 +8,16 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+
+/*
+ * Author: Anurag Kumar
+ * 
+ * TODO : 
+ * -> doesn't work if input "bags", find out why??
+ * -> also save image link.
+ * -> filter out main product, from accessories or others.
+ * 
+ */
 public class FlipkartSearchProductClrawler {
 	public static void main(String[] args){
 		System.out.println("Enter the product for crawler on flipkart :");
