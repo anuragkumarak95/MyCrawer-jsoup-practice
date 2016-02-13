@@ -34,11 +34,12 @@ public class App
     				if(e.attr("class").contains("product-unit")) {
     						Elements products = e.select("div");
     						for(Element productDetails : products) {
-    							
+    							//crawling at the details section for each product.
     							if(productDetails.attr("class").contains("pu-details")) {
     								Product pro = new Product();
     								Elements productTitle = productDetails.select("a");
     								for(Element title : productTitle) {
+    									//looking for title and link
     									if(title.attr("data-tracking-id").contains("prd_title")) {
     										pro.setName(title.attr("title"));
     										pro.setLink(title.attr("href"));
@@ -46,6 +47,7 @@ public class App
     								}
     								Elements productRate = productDetails.select("span");
     								for(Element rate : productRate) {
+    									//looking for rate in span value.
     									if(rate.attr("class").contains("fk-font-17")) {
     										
     										pro.setRate(rate.childNodes().get(0));

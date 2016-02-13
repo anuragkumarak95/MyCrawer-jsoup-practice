@@ -7,6 +7,8 @@ public class Product{
 	private String name;
 	private String link;
 	private Node rate;
+	
+	//getters n setters..
 	public String getName() {
 		return name;
 	}
@@ -29,4 +31,6 @@ public class Product{
 	public void printProductDetais() {
 		System.out.println(name+"\n["+link+"]\n"+" : "+rate);
 	}
+	
+	
 }
