@@ -15,7 +15,7 @@ import org.jsoup.select.Elements;
  * Hello world!
  *
  */
-public class App 
+public class FlipkartSearchProductClrawler 
 {
     public static void main( String[] args ) throws IOException
     {
@@ -26,17 +26,17 @@ public class App
     	Document doc = Jsoup.connect("http://www.flipkart.com/search?q="+product+"&as=off&as-show=off&otracker=start").get();
     	Elements elements = doc.select("div");
     	ArrayList<Product> productList = new ArrayList<Product>() ;
-    	ArrayList<String> titleNodes = new ArrayList<String>();
-    	ArrayList<Node> rateNodes = new ArrayList<Node>();
     	for(Element e : elements) {
     			if(e.hasAttr("class")) {
     				//crawling products list
     				if(e.attr("class").contains("product-unit")) {
+    						//flipkart uses a div tag for each enclosed product specifications
     						Elements products = e.select("div");
     						for(Element productDetails : products) {
     							//crawling at the details section for each product.
     							if(productDetails.attr("class").contains("pu-details")) {
     								Product pro = new Product();
+    								//flipkart uses an anchor tag as a layout for title of products mentioned
     								Elements productTitle = productDetails.select("a");
     								for(Element title : productTitle) {
     									//looking for title and link
@@ -45,6 +45,7 @@ public class App
     										pro.setLink(title.attr("href"));
     									}
     								}
+    								//flipkart uses a span tag for displaying rate of the corresponding product.
     								Elements productRate = productDetails.select("span");
     								for(Element rate : productRate) {
     									//looking for rate in span value.
@@ -59,9 +60,13 @@ public class App
     				}
     			}
     	}
+    	
+    	//display full details for all gathered products.
     	for(Product productTrav : productList) {
     		productTrav.printProductDetais();
     	}
+    	
+    	//code to recursively re-execute the Application.
     	System.out.println("Wanna Try Again : ");
     	if(sc.nextLine().equals("y")) {
     		main(null);
